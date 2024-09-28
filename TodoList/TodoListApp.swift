@@ -11,7 +11,16 @@ import SwiftUI
 struct TodoListApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            if isAuthenticated() {
+                ContentView()
+            } else {
+                LoginView()
+            }
+            
         }
+    }
+    
+    func isAuthenticated() -> Bool {
+        return UserDefaults.standard.string(forKey: "username") != nil
     }
 }
