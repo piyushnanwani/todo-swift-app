@@ -1,26 +1,16 @@
-//
-//  TodoListApp.swift
-//  TodoList
-//
-//  Created by Piyush Nanwani on 17/09/24.
-//
-
 import SwiftUI
 
 @main
 struct TodoListApp: App {
+    @State private var isAuthenticated: Bool = false // Controls the app flow based on login state
+    
     var body: some Scene {
         WindowGroup {
-            if isAuthenticated() {
-                ContentView()
+            if isAuthenticated {
+                ContentView(isAuthenticated: $isAuthenticated)
             } else {
-                LoginView()
+                LoginView(isAuthenticated: $isAuthenticated)
             }
-            
         }
-    }
-    
-    func isAuthenticated() -> Bool {
-        return UserDefaults.standard.string(forKey: "username") != nil
     }
 }

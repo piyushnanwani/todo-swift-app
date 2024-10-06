@@ -1,59 +1,58 @@
-//
-//  ContentView.swift
-//  TodoList
-//
-//  Created by Piyush Nanwani on 17/09/24.
-//
-
 import SwiftUI
 
 struct ContentView: View {
-    
-    @State private var todos: [String] = []
-    @State private var newTodo: String = ""
-    
-
+    @Binding var isAuthenticated: Bool // Binding to change the authentication state
+    @State private var todos: [String] = [] // Holds list of ToDos
+    @State private var newTodo: String = "" // Holds the input for a new ToDo item
     
     var body: some View {
-        VStack {
-            TextField("New Todo", text: $newTodo)
-                .textFieldStyle(RoundedBorderTextFieldStyle())
-                .padding(.horizontal)
-            
-            Button(action: {
-                // if newTodo is not empty
-                // then add the newItem to my list
+        NavigationView {
+            VStack {
+                // Input Field for New ToDo
+                TextField("New Todo", text: $newTodo)
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                    .padding(.horizontal)
                 
-                if !newTodo.isEmpty {
-                    todos.append(newTodo)
-                    newTodo = ""
+                // Add Button
+                Button(action: {
+                    if !newTodo.isEmpty {
+                        todos.append(newTodo) // Adds new item to the list
+                        newTodo = "" // Clears the input field
+                    }
+                }) {
+                    Text("Add Todo")
+                        .frame(maxWidth: .infinity)
+                        .padding()
+                        .background(Color.blue)
+                        .foregroundColor(.white)
+                        .cornerRadius(10)
                 }
-            }) {
-                Text("Add Todo")
-                    .frame(maxWidth: .infinity)
-                    .padding()
-                    .background(Color.blue)
-                    .foregroundColor(.white)
-                    .cornerRadius(10)
-            }
-            .padding(.horizontal)
-            
-            List {
-                ForEach(todos, id: \.self) {
-                    todo in Text(todo)
+                .padding(.horizontal)
+                
+                // List of Todos
+                List {
+                    ForEach(todos, id: \.self) { todo in
+                        Text(todo) // Displays each ToDo item
+                    }
                 }
             }
-            
+            .padding()
+            .navigationTitle("ToDo List")
+            .toolbar {
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    // Logout Button
+                    Button(action: {
+                        isAuthenticated = false // Sets state to false without deleting credentials
+                    }) {
+                        Text("Logout")
+                            .foregroundColor(.red)
+                    }
+                }
+            }
         }
-        .padding()
-    
-        
     }
-      
-    
-    
 }
 
 #Preview {
-    ContentView()
+    ContentView(isAuthenticated: .constant(true))
 }
