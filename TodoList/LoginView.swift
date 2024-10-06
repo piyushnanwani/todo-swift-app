@@ -23,6 +23,8 @@ struct LoginView: View {
                 Button("Login") {
                     if authenticateUser(username: username, password: password) {
                         isAuthenticated = true // Set to true on successful login
+                        UserDefaults.standard.set(true, forKey: "isAuthenticated") // Update UserDefaults
+
                     } else {
                         loginFailed = true // Show error message
                     }
