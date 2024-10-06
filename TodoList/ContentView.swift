@@ -40,6 +40,16 @@ struct ContentView: View {
                     }
                     .onDelete(perform: deleteTodo) // Allow deletion of todos
                 }
+                // Navigation Button to Go to API Example
+                NavigationLink(destination: APIExampleView()) {
+                    Text("Try API Example")
+                        .padding()
+                        .background(Color.green)
+                        .foregroundColor(.white)
+                        .cornerRadius(10)
+                        .padding(.top, 20)
+                }
+            
             }
             .padding()
             .navigationTitle("ToDo List")
